@@ -12,5 +12,5 @@ app.use('/api/auth', require('./routes/auth'))
 app.use('/api/notes', require('./routes/notes'))
 
 app.listen(port, () => {
-  console.log('listening on port 3000')
+  console.log('listening on port 5000')
 })
