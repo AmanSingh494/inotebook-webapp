@@ -19,11 +19,12 @@ router.post(
   '/createnote',
   fetchUser,
   [
-    body('title', 'Title cannot be empty').exists(),
-    body('description', 'description cannot be empty').exists()
+    body('title', 'Title cannot be empty').notEmpty(),
+    body('description', 'description cannot be empty').notEmpty()
   ],
   async (req, res) => {
     const { title, description, tag } = req.body
+    console.log(title)
     const result = validationResult(req)
     if (!result.isEmpty()) {
       res.status(400).send({ error: result.array() })

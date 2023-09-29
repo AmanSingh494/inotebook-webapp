@@ -1,16 +1,21 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { Link, useLocation } from 'react-router-dom'
-const Navbar = () => {
+const Navbar = (props) => {
+  // use location hook helps to know on which route we currently are, location.pathname gives the name of the route
   const location = useLocation()
   // useEffect(() => {
   //   console.log(location.pathname)
   // }, [location])
+  const handleLogOut = () => {
+    localStorage.removeItem('token')
+    props.showAlert('Logged out successfully', 'success')
+  }
   return (
     <>
-      <nav className='navbar-dark navbar navbar-expand-lg bg-dark'>
+      <nav className='navbar-dark navbar navbar-expand-lg bg-dark' id='navbar'>
         <div className='container-fluid'>
           <Link className='navbar-brand' to='/'>
-            Navbar
+            iNotebook
           </Link>
           <button
             className='navbar-toggler'
@@ -47,17 +52,29 @@ const Navbar = () => {
                 </Link>
               </li>
             </ul>
-            <form className='d-flex' role='search'>
-              <input
-                className='form-control me-2'
-                type='search'
-                placeholder='Search'
-                aria-label='Search'
-              />
-              <button className='btn btn-outline-success' type='submit'>
-                Search
-              </button>
-            </form>
+            {!localStorage.getItem('token') ? (
+              <div>
+                <Link className='btn btn-light mx-2' to='/login' role='button'>
+                  Log in
+                </Link>
+                <Link
+                  className='btn btn-light mx-2'
+                  to='/createuser'
+                  role='button'
+                >
+                  Sign up
+                </Link>
+              </div>
+            ) : (
+              <Link
+                className='btn btn-light mx-2'
+                onClick={handleLogOut}
+                to='/login'
+                role='button'
+              >
+                Log out
+              </Link>
+            )}
           </div>
         </div>
       </nav>
